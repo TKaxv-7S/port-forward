@@ -28,7 +28,7 @@ func (_self *ForWardJob) StartJob(result chan Models.FuncResult) {
 	sourceAddr := fmt.Sprint(_self.Config.SrcAddr, ":", _self.Config.SrcPort)
 	destAddr := fmt.Sprint(_self.Config.DestAddr, ":", _self.Config.DestPort)
 
-	resultData := &Models.FuncResult{Code: 0, Msg: ""}
+	resultData := &Models.FuncResult{Code: 0, Msg: "success"}
 	var err error
 	if _self.IsUdpJob() {
 		//_self.PortListener, err = NetUtils.NewKCP(sourceAddr, Common.DefaultKcpSetting())

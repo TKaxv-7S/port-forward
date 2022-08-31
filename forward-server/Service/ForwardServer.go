@@ -2,6 +2,7 @@ package Service
 
 import (
 	"fmt"
+	"forward-core/Constant"
 	"forward-core/Models"
 	"net"
 	"sync"
@@ -82,6 +83,12 @@ func (_self *ForWardServer) GetForwardJob(config *Models.ForwardConfig) *ForWard
 }
 
 func (_self *ForWardServer) OpenForward(config *Models.ForwardConfig, result chan Models.FuncResult) {
+	hasJob := _self.GetForwardJob(config)
+	if hasJob != nil && hasJob.Status == Constant.RunStatus_Running {
+		resultData := &Models.FuncResult{Code: 1, Msg: "该端口转发正在执行中"}
+		result <- *resultData
+		return
+	}
 
 	forWardJob := new(ForWardJob)
 	forWardJob.ClientMap = make(map[string]*ForWardClient, 500)
